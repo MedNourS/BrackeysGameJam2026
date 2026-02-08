@@ -1,0 +1,65 @@
+// # is used for stats that have known keys
+// else sections/objects are based on what exists in the dialogue file/settings
+
+#meta {
+  #insta-show-text: false // default
+  #punctuation-pauses: true // default
+
+  #appear-speed {
+    #slow: 0.2
+    #normal: 0.12  
+  }
+}
+
+// This would probably just go in the root settings file
+#lang-settings {
+  #lang: jp
+  #font: nosutarudotto
+
+  Alice: アリス
+  Bob: ボッブ
+  Ghost: 幽霊
+}
+
+#section manor-room-enter-1 {
+  Alice: この部屋は静かねぇ…
+
+  Bob: <$slow あまり静かな…> @sfx(creak) @event(shadow-run)
+  え！？ @pause(0.5) なー　何だった？？
+
+  Alice: <$italic わかんないよ、<$ghost-float $speed(0.5) 怖いね…>>
+}
+
+#section manor-hallway {
+  ...
+}
+
+
+
+/*
+Notes are as regular
+
+newlines matter, 2 newlines means a new speaker, so empty newlines are required to have \n
+
+characters can be escaped with \, and regular \ need to be typed with \\ (\ will never render on its own)
+ex: \\\@ -> \@, \\\\@ -> \\{unfinished invalid object}
+
+TEXT OBJECTS:
+pause(seconds) pause text rendering for a bit
+sfx(effect) idk how to organize these
+event(event) idk how to organize these
+
+TEXT MODIFIERS: use $ to define one and <> to wrap around the text it applies to (Ex: <$slow $italic text>)
+Text:
+- italic
+- bold
+- fontsize(size)
+- header(scale) * -1 for smaller than normal text
+- extra-slow/slow/normal/fast/extra-fast
+- speed(characters-per-second)
+
+Animations:
+- ghost-float // Hover around napstablook style
+- shake(intensity) // Shake out of fear
+- rainbow(speed) // Wave rainbow
+*/
