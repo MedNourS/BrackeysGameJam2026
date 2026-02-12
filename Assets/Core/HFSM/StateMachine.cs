@@ -18,11 +18,12 @@ public class StateMachine
 
     // This is run from within states to change the state machine's state
     // As well as for state instantiation from null
-    public void ChangeState(State newState) {
-        /// Idk what to do with this...
-        //// Don't run state change if already in state instance
-        //// Different instances of the same state though are valid ch
-        //if (currState == newState) return;
+    public void ChangeState(State newState, bool forceReentry = false, bool enterChildren = true) {
+        // Dont reenter states unless forcing reentry
+        if (currState != null && newState != null &&
+            currState.GetType() == newState.GetType() && 
+            !forceReentry) 
+            return;
 
         Debug.Log("exited" + currState);
         currState?.Exit();
@@ -32,39 +33,44 @@ public class StateMachine
         // (usually in child states of innactive super-states)
         Debug.Log("entered" + currState);
         currState?.SetStateMachine(this);
+
+        // Don't run the default child assignment if preventing enterChildren
+        if (currState is SuperState ss && !enterChildren) ss.StopPropagation();
+        
         currState?.Enter();
     }
 
     // Handle state changes more than 1 layer deep
-    /// KNOWN BUG: Exiting states sets all children to null,
-    /// meaning that we can exit and re-enter child states
-    /// wait is this a bug in my current implementation?
-    public void ChangeDeepState(State[] path, int index = 0)
+    /// To test
+    /// root -> a -> b -> c
+    /// root.ChangeDeep([a],[a,b],[a,b,c])
+    /// a.ChangeDeep([b],[b,c])
+    public void ChangeDeepState(State[] path, bool forceReentry = false, int index = 0)
     {
         // Quit if path is empty
         if (path.Length == 0) return;
 
         State next = path[index];
 
-        // ChangeState and quit if reached end
-        // or if by some mistake a non-ending state doesnt have children
-        if (index >= path.Length - 1 || !(currState is SuperState ss)) {
-            ChangeState(next);
-            return;
+        // Skip this level if theyre the same state and move deeper
+        if (currState.GetType() != next.GetType() || forceReentry)
+        {
+            // Propagate through SSs to reach desired deep state (recursively)
+            // Dont do it though if we are at the end of the path
+            if (currState is SuperState ss && index < path.Length - 1)
+            {
+                ChangeState(next, forceReentry, false);
+                ChangeDeepState(path, forceReentry, index + 1);
+            }
+            else
+                // Even if this is a superstate since its at the end of the chain we want to enter defauts
+                ChangeState(next, forceReentry);
         }
-
-        Debug.Log("exited super " + currState);
-        currState?.Exit();
-        currState = next;
-
-        // Our states have decoupled ownership and existence, so null states can exist
-        // (usually in child states of innactive super-states)
-        Debug.Log("entered super " + currState);
-
-        currState?.SetStateMachine(this); // The magic line
-
-        // Propagate through SSs to reach desired deep state (recursively)
-        ss.EnterDeep(path, index);
+        // Not reached end yet
+        else if (index < path.Length - 1)
+        {
+            ChangeDeepState(path, forceReentry, index + 1);
+        }
     }
 
     // Access state without publicizing it 

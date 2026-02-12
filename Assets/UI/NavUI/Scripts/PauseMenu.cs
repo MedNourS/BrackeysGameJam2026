@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,11 +11,21 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseUI;
     [SerializeField] private GameObject confirmUI;
 
+    private InputAction cancelAction;
+
+    // Actions need to be enabled and disabled
+    private void OnEnable()
+    {
+        cancelAction = InputManager.Actions.FindActionMap("UI").FindAction("Cancel");
+        cancelAction.Enable();
+    }
+
+    private void OnDisable() => cancelAction.Disable();
+
     // Toggle pause menu with [Esc] key
     private void Update()
     {
-        bool foo = false;
-        if (foo) // Input esc
+        if (cancelAction.triggered) // Input esc
         { 
             if (gamePaused)
                 Resume();

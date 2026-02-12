@@ -14,13 +14,10 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance; // Universally accessible
 
     // On instantiation, ensure there is only one GameObject that has this manager attached
-    // And that it is scene-persistent
     private void Awake()
     {
-        if (Instance == null) {
+        if (Instance == null)
             Instance = this;
-            DontDestroyOnLoad(Instance);
-        }
         else
             Destroy(gameObject);
     }

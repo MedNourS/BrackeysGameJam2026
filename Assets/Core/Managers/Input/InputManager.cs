@@ -14,12 +14,10 @@ public class InputManager : MonoBehaviour
     [SerializeField] private InputActionAsset inputActionsAsset;
 
     // On instantiation, ensure there is only one GameObject that has this manager attached
-    // And that it is scene-persistent
     private void Awake()
     {
         if (Instance == null) {
             Instance = this;
-            DontDestroyOnLoad(Instance);
 
             // Assign from editor
             Actions = inputActionsAsset;
