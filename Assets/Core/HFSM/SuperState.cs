@@ -4,7 +4,7 @@
 public abstract class SuperState : State
 {
     // SuperStates own their own StateMachine that manages further child states
-    protected StateMachine subSM;
+    public StateMachine subSM { get; protected set; }
     private bool enterChildren = true;
 
     // Don't enter default child state

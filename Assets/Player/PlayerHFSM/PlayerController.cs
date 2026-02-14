@@ -29,6 +29,22 @@ public class PlayerController : MonoBehaviour
         });
     }
 
+    /*
+    
+    Expected Start behaviour:
+
+    SM 0 Enter Playing
+    SM 1 Enter Movement
+    SM 2 Enter Grounded
+    
+    SM 1 Exit Movement
+    SM 2 Exit Grounded
+    
+    SM 1 Enter Interaction
+    SM 2 Enter Dialogue
+     
+    */
+
     // Update HFSM methods
     private void Update() { playerHFSM.Update(); }
     private void FixedUpdate() { playerHFSM.FixedUpdate(); }

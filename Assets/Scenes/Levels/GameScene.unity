@@ -17463,6 +17463,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1527721504}
+  - component: {fileID: 1527721505}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -17487,6 +17488,18 @@ Transform:
   - {fileID: 839112749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1527721505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1527721503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10231bb37374e945a482b7717888881, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ManagerManager
 --- !u!43 &1658093706
 Mesh:
   m_ObjectHideFlags: 0
