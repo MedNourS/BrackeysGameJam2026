@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 8366291937353974474}
   - component: {fileID: 9057553495229359871}
   - component: {fileID: 3085822526672605582}
-  - component: {fileID: 5197125057716408715}
+  - component: {fileID: 7811163653238328999}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216dadd998480864e9d9cceb74e2687e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
---- !u!114 &5197125057716408715
+--- !u!114 &7811163653238328999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -269,3 +269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214298344b8737049bd619acc72058a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerContext
+  pc: {fileID: 3085822526672605582}
+  cc: {fileID: 9057553495229359871}
+  groundCheck: {fileID: 2715694068216578876}
+  ceilCheck: {fileID: 3229146950332034801}
+  terrainMask:
+    serializedVersion: 2
+    m_Bits: 8

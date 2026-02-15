@@ -3,6 +3,9 @@
 
 public abstract class SuperState : State
 {
+    // Constructor for passing context
+    public SuperState(PlayerContext ctx) : base(ctx) { }
+
     // SuperStates own their own StateMachine that manages further child states
     public StateMachine subSM { get; protected set; }
     private bool enterChildren = true;

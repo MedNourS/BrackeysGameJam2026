@@ -1,11 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
     // Static instance as accessible reference to PlayerController from anywhere
     public static PlayerController Instance { get; private set; }
     
-    public StateMachine playerHFSM { get; private set; }
+    public PlayerContext Context { get; private set; }    // Context used in HFSM
+    public StateMachine PlayerHFSM { get; private set; }  // Root FSM
+    public InputActionMap PlayerMap { get; private set; } // Input maps (contain actions)
+    public InputActionMap UIMap { get; private set; }
 
     private void Awake()
     {
@@ -15,40 +19,34 @@ public class PlayerController : MonoBehaviour
         else
             Destroy(gameObject);
 
-        // Create new top-level StateMachine
-        playerHFSM = new StateMachine();
+        Context = new PlayerContext(this);
+        
+        PlayerHFSM = new StateMachine(); // Create new top-level StateMachine
+
+        PlayerMap = InputManager.Actions.FindActionMap("Player");
+        UIMap = InputManager.Actions.FindActionMap("UI");
     }
 
-    // Testing HFSM behaviour
+    // Enabling/Disabling for inputActions
+    private void OnEnable()
+    {
+        PlayerMap.Enable();
+        UIMap.Enable();
+    }
+    private void OnDisable()
+    {
+        PlayerMap.Disable();
+        UIMap.Disable();
+    }
+
+    // Enter default state
     private void Start()
     {
-        playerHFSM.ChangeState(new PlayingPlayerState());
-        playerHFSM.ChangeDeepState(new State[] {
-            new PlayingPlayerState(),
-            new InteractionPlayerState(),
-            new DialoguePlayerState()
-        });
+        PlayerHFSM.ChangeState(new PlayingPlayerState(this.Context));
     }
 
-    /*
-    
-    Expected Start behaviour:
-
-    SM 0 Enter Playing
-    SM 1 Enter Movement
-    SM 2 Enter Grounded
-    
-    SM 1 Exit Movement
-    SM 2 Exit Grounded
-    
-    SM 1 Enter Interaction
-    SM 2 Enter Dialogue
-     
-    it works!
-    */
-
     // Update HFSM methods
-    private void Update() { playerHFSM.Update(); }
-    private void FixedUpdate() { playerHFSM.FixedUpdate(); }
-    private void LateUpdate() { playerHFSM.LateUpdate(); }
+    private void Update() { PlayerHFSM.Update(); }
+    private void FixedUpdate() { PlayerHFSM.FixedUpdate(); }
+    private void LateUpdate() { PlayerHFSM.LateUpdate(); }
 }
