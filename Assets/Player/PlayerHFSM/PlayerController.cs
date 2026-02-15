@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
         playerHFSM = new StateMachine();
     }
 
+    // Testing HFSM behaviour
     private void Start()
     {
         playerHFSM.ChangeState(new PlayingPlayerState());
@@ -43,6 +44,7 @@ public class PlayerController : MonoBehaviour
     SM 1 Enter Interaction
     SM 2 Enter Dialogue
      
+    it works!
     */
 
     // Update HFSM methods
