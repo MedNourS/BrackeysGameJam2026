@@ -19,9 +19,8 @@ public class SaveSystem
     {
         // Don't make new save if save already exists
         if (PlayerPrefs.HasKey(SaveKey)) 
-        { 
-            string json = PlayerPrefs.GetString(SaveKey);
-            currentSave = JsonUtility.FromJson<SaveData>(json);
+        {
+            Load();
         }
         else
         {
@@ -37,6 +36,13 @@ public class SaveSystem
         PlayerPrefs.SetString(SaveKey, json);
         PlayerPrefs.Save();
     }
+    
+    // Load from playerPrefs into SaveData
+    public static void Load()
+    {
+        string json = PlayerPrefs.GetString(SaveKey);
+        currentSave = JsonUtility.FromJson<SaveData>(json);
+    }
 
     public static void Reset()
     {
@@ -48,6 +54,13 @@ public class SaveSystem
 
     // Add more of these methods for whatever variables need to be accessed
     // Accessed like SaveSystem.UnlockedLevels
+
+    public static bool NewGame
+    {
+        get => currentSave.newGame;
+        set => currentSave.newGame = value;
+    }
+
     public static int UnlockedLevels
     {
         get => currentSave.unlockedLevels;

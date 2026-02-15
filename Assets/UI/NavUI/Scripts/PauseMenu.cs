@@ -33,6 +33,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    // Methods are public so they can be accessed with UnityEvents attached to buttons
     public void Pause()
     {
         pauseUI.SetActive(true);

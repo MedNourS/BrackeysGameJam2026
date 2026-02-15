@@ -18,10 +18,10 @@ public class LockLevels : MonoBehaviour
         int unlocked = SaveSystem.UnlockedLevels;
         Button[] buttons = levelContainer.GetComponentsInChildren<Button>();
 
-        for (int i = 1; i <= levelCount; i++)
+        for (int i = 0; i < levelCount; i++)
         {
             // Only set button to interactable if it is unlocked or previous level
-            buttons[i].interactable = i <= unlocked;
+            buttons[i].interactable = i < unlocked;
         }
     }
 }

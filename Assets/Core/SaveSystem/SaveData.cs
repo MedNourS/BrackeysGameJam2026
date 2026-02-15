@@ -8,5 +8,7 @@
 public class SaveData {
     /// IMPORTANT: Assign DEFAULTS to save data
     // Otherwise they'll get instantiated with 0 or null!!
+
+    public bool newGame = true;
     public int unlockedLevels = 1;
 }

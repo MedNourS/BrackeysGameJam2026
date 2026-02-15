@@ -18,6 +18,7 @@ public class IntroToCSharp : MonoBehaviour
     // C# Types are the same as Java, BUT:
     /// Use float instead of double
     /// Use string instead of String
+    /// Use bool instead of boolean
 
     // C# + Unity has the same public and private fields that you've seen in java
     public static string PublicFieldThatBelongsToClass;
@@ -214,4 +215,9 @@ public class IntroToCSharp : MonoBehaviour
     }
 
     /// That should be all! See Templates > Scripts for more tutorials on other features!
+}
+
+
+public class OtherScript : IntroToCSharp {
+    public void SomePublicMethod() { Debug.Log("Ran SomePublicMethod() of OtherScript which inherits from IntroToCSharp"); }
 }
