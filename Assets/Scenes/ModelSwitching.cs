@@ -4,11 +4,11 @@ public class ModelSwitching : MonoBehaviour
 {
     [SerializeField] private GameObject regular;
     [SerializeField] private GameObject strange;
-    
+    [SerializeField] private bool isStrange = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
     }
 
     public void SwapModels(bool strangified)
@@ -17,7 +17,8 @@ public class ModelSwitching : MonoBehaviour
         {
             regular.SetActive(false);
             strange.SetActive(true);
-        } else
+        }
+        else
         {
             regular.SetActive(true);
             strange.SetActive(false);
@@ -27,6 +28,6 @@ public class ModelSwitching : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        SwapModels(isStrange);
     }
 }
