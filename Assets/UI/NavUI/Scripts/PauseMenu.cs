@@ -47,10 +47,8 @@ public class PauseMenu : MonoBehaviour
         gamePaused = false;
     }
     
-    public void OpenSettings()
-    {
-        Debug.Log("Opened settings");
-    }
+    public void OpenSettings() => SceneManager.LoadScene("SettingsMenu");
+    
 
     // Pull up the "Are you sure you want to quit?" menu,
     // or return to the original pause menu from the confirmation menu
