@@ -8,8 +8,6 @@ public class PlayerController : MonoBehaviour
     
     public PlayerContext Context { get; private set; }    // Context used in HFSM
     public StateMachine PlayerHFSM { get; private set; }  // Root FSM
-    public InputActionMap PlayerMap { get; private set; } // Input maps (contain actions)
-    public InputActionMap UIMap { get; private set; }
 
     private void Awake()
     {
@@ -18,25 +16,10 @@ public class PlayerController : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-
-        Context = new PlayerContext(this);
         
         PlayerHFSM = new StateMachine(); // Create new top-level StateMachine
 
-        PlayerMap = InputManager.Actions.FindActionMap("Player");
-        UIMap = InputManager.Actions.FindActionMap("UI");
-    }
-
-    // Enabling/Disabling for inputActions
-    private void OnEnable()
-    {
-        PlayerMap.Enable();
-        UIMap.Enable();
-    }
-    private void OnDisable()
-    {
-        PlayerMap.Disable();
-        UIMap.Disable();
+        Context = gameObject.GetComponent<PlayerContext>();
     }
 
     // Enter default state

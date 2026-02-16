@@ -15,5 +15,10 @@ public class PlayingPlayerState : SuperState
         base.Exit();
     }
 
-    public override void Update() { base.Update(); Debug.Log("Now Playing"); }
+    public override void Update() { 
+        base.Update();
+        // Apply and move player with gravity
+        context.Gravity();
+        context.Move(context.velocity);
+    }
 }
