@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -48,10 +49,7 @@ public class SettingsMenu : MonoBehaviour
 		resolutionDropdown.value = currentResolutionIndex;
 		resolutionDropdown.RefreshShownValue();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+		
+	//transitions to different scenes
+	public void OpenPauseMenu() => SceneManager.LoadScene("PauseMenu");
 }
