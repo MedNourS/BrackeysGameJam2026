@@ -17,6 +17,7 @@ public class CapturedPlayerState : State
 
     public override void Update()
     {
-        // Logic for looking around, 
+        // Logic for looking around, if fire spore,
+        //parentSM.ChangeState(new AirbornePlayerState(context));
     }
 }

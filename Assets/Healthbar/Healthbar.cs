@@ -14,7 +14,7 @@ public class Healthbar : MonoBehaviour
         Instance = this;
     }
 
-    private void Start() => Health = PlayerManager.Instance.Health;
+    // private void Start() => Health = PlayerManager.Instance.Health;
 
     public void InitHealth()
     {

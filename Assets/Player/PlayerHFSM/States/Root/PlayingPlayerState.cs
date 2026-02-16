@@ -6,7 +6,7 @@ public class PlayingPlayerState : SuperState
     public PlayingPlayerState(PlayerContext ctx) : base(ctx) { }
 
     // Default child
-    protected override State GetDefaultState() { return new MovementPlayerState(context); }
+    protected override State GetDefaultState() { return new WallWalkerPlayerState(context); }
 
     public override void Enter() {
         base.Enter();
@@ -17,8 +17,5 @@ public class PlayingPlayerState : SuperState
 
     public override void Update() { 
         base.Update();
-        // Apply and move player with gravity
-        context.Gravity();
-        context.Move(context.velocity);
     }
 }

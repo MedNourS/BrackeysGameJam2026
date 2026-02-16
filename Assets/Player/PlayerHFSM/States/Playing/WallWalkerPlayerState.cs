@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class CapturedPlayerState : State
+public class WallWalkerPlayerState : State
 {
     // Constructor for passing context
-    public CapturedPlayerState(PlayerContext ctx) : base(ctx) { }
+    public WallWalkerPlayerState(PlayerContext ctx) : base(ctx) { }
 
     public override void Enter()
     {
-        Debug.Log("Object captured! Ready to spore!");
+        Debug.Log("On ground, walking");
     }
 
     public override void Exit()
@@ -17,6 +17,8 @@ public class CapturedPlayerState : State
 
     public override void Update()
     {
-        // Logic for looking around, 
+        // Logic for moving, see spheremovement
+        // If grabbed object
+        //parentSM.ChangeState(new CapturedPlayerState(context));
     }
 }
