@@ -22515,6 +22515,7 @@ GameObject:
   - component: {fileID: 2680844358921467005}
   - component: {fileID: 3214914169552965704}
   - component: {fileID: 1462932341}
+  - component: {fileID: 3289819662489883586}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -22522,6 +22523,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3289819662489883586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3289819662489883585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2555dd98bc33273daec58bafd00e30a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  infectionMat: {fileID: 2100000, guid: caf82fa922f116b979ab36ac0aa972ec, type: 2}
 --- !u!1 &4261338545273155625
 GameObject:
   m_ObjectHideFlags: 0
