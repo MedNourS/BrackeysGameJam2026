@@ -4,8 +4,9 @@ Im using this file as a convenient way to pass notes along, feel free to use it 
 
 DecDDM: Monday @11pm 
     - put audio mixer in core > manageers > audiomanager
-    - adjusted Ruby's settings UI
-    - adjusted UI in general
+    - put healthbar in UI > game UI    
+    - adjusted all game UI
+    - fixed input system (see templates!)
+    - fixed hfsm playercontext (safe to use now!)
     - fixed pause menu ([ESC] to pause)
-    - Made using inputs easier (take another look at the tutorial in templates!)
 */
