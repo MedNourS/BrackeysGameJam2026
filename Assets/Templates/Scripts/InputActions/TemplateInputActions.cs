@@ -8,16 +8,32 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class TemplateInputActions : MonoBehaviour
 {
+    private InputSystem_Actions controls;
+
     private InputAction moveAction;
+    private InputAction jumpAction;
+
+    // Instantiate
+    private void Awake()
+    {
+        controls = new InputSystem_Actions();
+
+        moveAction = controls.Player.Move;
+        jumpAction = controls.Player.Jump;
+    }
 
     // Actions need to be enabled and disabled
     private void OnEnable()
     {
-        moveAction = InputManager.Actions.FindActionMap("Player").FindAction("Move");
-        moveAction.Enable();
+        // I can enable player controls as a whole
+        controls.Player.Enable();
+
+        // Or I could do them one-by-one
+        /// moveAction.Enable();
+        /// jumpAction.Enable();
     }
 
-    private void OnDisable() => moveAction.Disable();
+    private void OnDisable() => controls.Player.Disable();
 
     private void Update()
     {
@@ -26,7 +42,7 @@ public class TemplateInputActions : MonoBehaviour
         Debug.Log(input);
 
         // Use triggered for a one-frame "OnPress" pulse
-        if (moveAction.triggered) 
+        if (jumpAction.triggered) 
         {
             Debug.Log("triggered!");
         }

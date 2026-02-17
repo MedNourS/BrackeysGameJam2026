@@ -10,21 +10,17 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseUI;
     [SerializeField] private GameObject confirmUI;
 
-    private InputAction cancelAction;
+    private InputSystem_Actions controls;
 
-    // Actions need to be enabled and disabled
-    private void OnEnable()
-    {
-        cancelAction = InputManager.Actions.FindActionMap("UI").FindAction("Cancel");
-        cancelAction.Enable();
-    }
-
-    private void OnDisable() => cancelAction.Disable();
+    // Actions initing
+    private void Awake() => controls = new InputSystem_Actions();
+    private void OnEnable() => controls.UI.Cancel.Enable();
+    private void OnDisable() => controls.UI.Cancel.Disable();
 
     // Toggle pause menu with [Esc] key
     private void Update()
     {
-        if (cancelAction.triggered) // Input esc
+        if (controls.UI.Cancel.triggered) // Input esc
         { 
             if (gamePaused)
                 Resume();
