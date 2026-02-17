@@ -11,22 +11,18 @@ public class ModelSwitching : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Swaps normal model with the strange model depending on the field
+    /// </summary>
+    /// <param name="strangified">represents whether thse model should be strange or not</param>
     public void SwapModels(bool strangified)
     {
-        if (strangified)
-        {
-            regular.SetActive(false);
-            strange.SetActive(true);
-        } else
-        {
-            regular.SetActive(true);
-            strange.SetActive(false);
-        }
+        regular.setActive(!strangified);
+        strange.setActive(strangified);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
