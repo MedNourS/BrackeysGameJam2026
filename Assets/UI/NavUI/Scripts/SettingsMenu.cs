@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class SettingsMenu : MonoBehaviour
 {
 	//objects
 	public AudioMixer audioMixer;
 	Resolution[] resolutions;
-	public Dropdown resolutionDropdown;
+	public TMP_Dropdown resolutionDropdown;
 	
 	//volume
 	public void SetVolume(float volume){

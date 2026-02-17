@@ -9,8 +9,8 @@ public class PlayerContext : MonoBehaviour
     public CharacterController cc { get; private set; }
     public Transform body { get; private set; }
 
-    public InputActionMap playerMap { get; private set; }
-    public InputActionMap UIMap { get; private set; }
+    public InputActionMap playerControls { get; private set; }
+    public InputActionMap UIControls { get; private set; }
 
     // Assign in-editor
     public Camera cam { get; private set; }
@@ -29,8 +29,10 @@ public class PlayerContext : MonoBehaviour
     public float walkSpeed = 8f;
     public float jumpHeight = 0.015f;
 
+    // For private input setting only
+    private InputSystem_Actions controls;
 
-    // Assign all objects based on the gameObject the playercontroller is attached to
+    // Init everything
     public void Awake()
     {
         context = this;
@@ -38,53 +40,23 @@ public class PlayerContext : MonoBehaviour
         cc = GetComponent<CharacterController>();
         body = transform;
 
-        playerMap = InputManager.Actions.FindActionMap("Player");
-        UIMap = InputManager.Actions.FindActionMap("UI");
+        controls = new InputSystem_Actions();
+
+        playerControls = controls.Player;
+        UIControls = controls.UI;
     }
 
     // Enabling/Disabling for inputActions
     private void OnEnable()
     {
-        playerMap.Enable();
-        UIMap.Enable();
+        playerControls.Enable();
+        UIControls.Enable();
     }
     private void OnDisable()
     {
-        playerMap.Disable();
-        UIMap.Disable();
+        playerControls.Disable();
+        UIControls.Disable();
     }
 
-
-
-    // Helper methods for states
-    public void Move(Vector3 direction)
-    {
-        cc.Move(direction * Time.deltaTime);
-    }
-
-    public void WASDMove(float speedModifier, InputAction moveAction)
-    {
-        // Take WASD input
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        Vector3 move = body.right * input.x + body.forward * input.y;
-        Move(move * walkSpeed * speedModifier);
-    }
-
-    public void Gravity() 
-    {
-        // Use spheres placed at the head and feet at the player to check for surface collision
-        isGrounded = Physics.CheckSphere(groundCheck.position, 0.4f, terrainMask);
-        bool headBonking = Physics.CheckSphere(ceilCheck.position, 0.4f, terrainMask);
-
-        // Negative floored velocity
-        if (isGrounded && velocity.y < 0f)
-            velocity.y = -2f;
-
-        // If head hitting get sent downwards
-        if (headBonking && velocity.y > 0f)
-            velocity.y = -jumpHeight;
-
-        // gravity is acceleration so time is squared
-        velocity.y += gravity * Time.deltaTime;
-    }
+    // Put helper methods for states here
 }
