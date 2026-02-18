@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class Paint : MonoBehaviour
 {
     [SerializeField] private Material infectionMat;
+    [SerializeField] private GameObject prefab;
 
     // Update is called once per frame
     void Update()
@@ -14,8 +15,24 @@ public class Paint : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit))
             {
-                hit.collider.gameObject.GetComponent<MeshRenderer>().material = infectionMat;
-                Debug.Log(hit.textureCoord + " " + hit.textureCoord2 + " " + hit.triangleIndex);
+                GameObject decalObject = Instantiate(prefab, hit.point, Quaternion.identity);
+                decalObject.transform.forward = -hit.normal;
+                decalObject.transform.position += hit.normal / 10;
+                Debug.Log(hit.normal);
+            }
+        }
+
+        if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+        {
+            Ray ray = new Ray(transform.position, -transform.up);
+            RaycastHit hit;
+            if(Physics.Raycast(ray, out hit))
+            {
+                Debug.Log(hit.collider.name);
+                if(hit.collider.gameObject.CompareTag("Ink"))
+                {
+                    Debug.Log("HELLO");
+                }
             }
         }
     }
