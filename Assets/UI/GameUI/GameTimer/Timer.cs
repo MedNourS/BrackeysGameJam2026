@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        timeLeft = 300f;
+        timeLeft = 70f;
     }
     private void Awake()
     {
@@ -31,6 +31,14 @@ public class Timer : MonoBehaviour
         TimeSpan time = TimeSpan.FromSeconds(timeLeft);
         if (timeLeft >= 0) 
         {
+            if (timeLeft <= 10)
+            {
+                text.color = Color.red;
+            }
+            else if (timeLeft <= 60)
+            {
+                text.color = Color.yellow;
+            }
             if (time.Seconds > 9f)
             {
                 if (time.Milliseconds > 99f)
