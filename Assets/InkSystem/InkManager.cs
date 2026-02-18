@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class InkManager : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class InkManager : MonoBehaviour
         Instance = this;
     }
 
-    // Update is called once per frame
+    // For testing purposes
     void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -21,7 +23,7 @@ public class InkManager : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit))
             {
-                createInkBlob(hit.point, hit.normal);
+                createInkBlob(hit.point, hit.normal, 1, 1);
             }
         }
 
@@ -31,17 +33,33 @@ public class InkManager : MonoBehaviour
         }
     }
 
-    //Create a decal
-    public void createInkBlob(Vector3 pos, Vector3 normal)
+    /// <summary>
+    /// Creates a decal object
+    /// </summary>
+    /// <param name="pos">The position of the object</param>
+    /// <param name="normal">The direction is it supposed to face</param>
+    /// <param name="height">Height of the object</param>
+    /// <param name="width">Width of the object</param>
+    public void createInkBlob(Vector3 pos, Vector3 normal, float height, float width)
     {
         GameObject decalObject = Instantiate(inkPrefab, pos, Quaternion.identity);
-        //Makes the object face the same direction as the opposite of the normal
-        decalObject.transform.forward = -normal;
-        //Add an offset in the normal direction so the collider sticks out, divide by 10 so it sticks out just a tiny bit
-        decalObject.transform.position += normal / 10;
+
+        //Sets the size of the decal
+        decalObject.GetComponent<DecalProjector>().size = new Vector3(width, height, 1);
+ 
+        //Makes the object face the same direction as the normal
+        decalObject.transform.forward = normal;
+
+        //Add an offset in the normal direction so the collider doesn't stick out, * 9/10 so it still sticks out a bit
+        //It also fixes the flickering
+        decalObject.transform.position -= normal * 9 / 10;
     }
 
-    //Checks if player is standing on ink
+    /// <summary>
+    /// Checks if the player is standing on ink
+    /// </summary>
+    /// <param name="pos">The position of the player</param>
+    /// <returns>Returns true if player is standing on ink</returns>
     public bool checkIfStandingOnInk(Vector3 pos)
     {
         //Sends a ray down (-y)
