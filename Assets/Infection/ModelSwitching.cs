@@ -17,8 +17,8 @@ public class ModelSwitching : MonoBehaviour
     /// <param name="strangified">represents whether thse model should be strange or not</param>
     public void SwapModels(bool strangified)
     {
-        regular.setActive(!strangified);
-        strange.setActive(strangified);
+        regular.SetActive(!strangified);
+        strange.SetActive(strangified);
     }
 
     // Update is called once per frame
