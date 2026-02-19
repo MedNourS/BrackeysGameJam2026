@@ -56,8 +56,23 @@ public class Timer : MonoBehaviour
             } 
             else
             {
-                text.text = time.Minutes.ToString() + ":0" + time.Seconds.ToString() + "." + time.Milliseconds.ToString();
+                
+                if (time.Milliseconds > 99f)
+                {
+                    text.text = time.Minutes.ToString() + ":0" + time.Seconds.ToString() + "." + time.Milliseconds.ToString();
+                } 
+                else if (time.Milliseconds > 9f)
+                {
+                    text.text = time.Minutes.ToString() + ":0" + time.Seconds.ToString() + ".0" + time.Milliseconds.ToString();
+                } 
+                else
+                {
+                    text.text = time.Minutes.ToString() + ":0" + time.Seconds.ToString() + ".00" + time.Milliseconds.ToString();
+                }
             }
+        } else
+        {
+            text.text = "0:00.000";
         }
     }
 
