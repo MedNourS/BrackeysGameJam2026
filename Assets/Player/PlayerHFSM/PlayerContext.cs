@@ -26,7 +26,7 @@ public class PlayerContext : MonoBehaviour
     // Modifyable in other states
     public Vector3 velocity;
     public float gravity = -0.3f;
-    public float walkSpeed = 8f;
+    public float kSpeed = 8f;
     public float jumpHeight = 0.015f;
 
     // For private input setting only

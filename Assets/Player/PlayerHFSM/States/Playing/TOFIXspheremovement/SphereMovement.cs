@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,8 @@ public class SphereMovement : MonoBehaviour
     [SerializeField] private LayerMask terrainMask;
     // New Unity 6 input handling system
     [SerializeField] private InputActionAsset inputActions;
+    [SerializeField] private Camera cam;
+
     private InputSystem_Actions controls;
 
     private Vector3 forward;
@@ -19,6 +22,7 @@ public class SphereMovement : MonoBehaviour
     private void Awake()
     {
         controls = new InputSystem_Actions();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void OnEnable() => controls.Player.Move.Enable();
@@ -63,7 +67,7 @@ public class SphereMovement : MonoBehaviour
             forward = Vector3.ProjectOnPlane(forward, up).normalized;
             dir = Quaternion.AngleAxis(inputAngle, up) * forward;
 
-            sphere.rotation = Quaternion.LookRotation(forward, up);
+            // sphere.rotation = Quaternion.LookRotation(forward, up);
         }
         return newPoint != null;
     }
@@ -110,6 +114,13 @@ public class SphereMovement : MonoBehaviour
         */
 
         Vector2 input = controls.Player.Move.ReadValue<Vector2>();
+        float cameraYaw = cam.transform.eulerAngles.y;
+        float degreesToRadians = -(float)Math.PI / 180f;
+
+        input = new Vector2(
+            input.x * (float)Math.Cos(cameraYaw * degreesToRadians) - input.y * (float)Math.Sin(cameraYaw * degreesToRadians),
+            input.x * (float)Math.Sin(cameraYaw * degreesToRadians) + input.y * (float)Math.Cos(cameraYaw * degreesToRadians)
+        );
 
         // Player movement
         Vector2 normalizedInput = input.normalized;
