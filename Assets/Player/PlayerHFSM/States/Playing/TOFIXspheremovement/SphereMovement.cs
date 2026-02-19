@@ -8,7 +8,7 @@ public class SphereMovement : MonoBehaviour
     [SerializeField] private LayerMask terrainMask;
     // New Unity 6 input handling system
     [SerializeField] private InputActionAsset inputActions;
-    private InputAction moveAction;
+    private InputSystem_Actions controls;
 
     private Vector3 forward;
     private Vector3 dir;
@@ -16,14 +16,14 @@ public class SphereMovement : MonoBehaviour
 
     private float inputAngle = 0;
 
-    void OnEnable()
+    private void Awake()
     {
-        // Get WASD/Joystick/Gamepad for movement
-        moveAction = inputActions.FindActionMap("Player").FindAction("Move");
-        moveAction.Enable();
+        controls = new InputSystem_Actions();
     }
 
-    void OnDisable() => moveAction?.Disable();
+    void OnEnable() => controls.Player.Move.Enable();
+
+    void OnDisable() => controls.Player.Move.Disable();
 
     // Note, terrainMask is built in
     void FindClosestPoint(Vector3 origin, float radius, out Collider[] hits, out Vector3? closestPoint, out float closestDist, out Vector3? surfaceNormal)
@@ -109,7 +109,7 @@ public class SphereMovement : MonoBehaviour
         
         */
 
-        Vector2 input = moveAction.ReadValue<Vector2>();
+        Vector2 input = controls.Player.Move.ReadValue<Vector2>();
 
         // Player movement
         Vector2 normalizedInput = input.normalized;
