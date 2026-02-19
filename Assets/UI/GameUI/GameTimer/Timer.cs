@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour
 
     void Start()
     {
-        timeLeft = 70f;
+        timeLeft = 300f;
     }
     private void Awake()
     {

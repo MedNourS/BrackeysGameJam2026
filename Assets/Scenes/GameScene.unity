@@ -17750,6 +17750,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Healthbar
   slider: {fileID: 302167385}
+  body: {fileID: 3289819662489883585}
+  inkManager: {fileID: 21969663}
 --- !u!1 &1471723691 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1375723535029480785, guid: 98c53ba8851729149bd6b12640a7da03, type: 3}
@@ -23187,7 +23189,7 @@ GameObject:
   - component: {fileID: 2680844358921467005}
   - component: {fileID: 3214914169552965704}
   - component: {fileID: 1462932341}
-  - component: {fileID: 3289819662489883586}
+  - component: {fileID: 3289819662489883587}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -23195,7 +23197,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &3289819662489883586
+--- !u!114 &3289819662489883587
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23204,9 +23206,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3289819662489883585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2555dd98bc33273daec58bafd00e30a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a18555187afe72a78c6639cbf4399bf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::InkManager
+  inkPrefab: {fileID: 8140075860794693014, guid: 285fe1ae3730d4d5dae8f912e7df9f2d, type: 3}
 --- !u!1 &4261338545273155625
 GameObject:
   m_ObjectHideFlags: 0
