@@ -12,12 +12,15 @@ public class AirbornePlayerState : State
 
     public override void Exit()
     {
-
+        MonoBehaviour.Destroy(context.body.gameObject.GetComponent<Rigidbody>());
     }
 
     public override void Update()
     {
         // Logic for looking around, on land do:
         //parentSM.ChangeState(new WallWalkerPlayerState(context));
+
+        Collider[] hits = Physics.OverlapSphere(context.body.position, 0.5f, context.terrainMask);
+        if (hits.Length > 0) parentSM.ChangeState(new SurfaceMovementPlayerState(context));
     }
 }
