@@ -19,6 +19,6 @@ public class WallWalkerPlayerState : State
     {
         // Logic for moving, see spheremovement
         // If grabbed object
-        //parentSM.ChangeState(new CapturedPlayerState(context));
+        // parentSM.ChangeState(new CapturedPlayerState(context));
     }
 }

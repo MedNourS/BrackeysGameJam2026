@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerContext : MonoBehaviour
 {
@@ -31,6 +32,22 @@ public class PlayerContext : MonoBehaviour
 
     // For private input setting only
     private InputSystem_Actions controls;
+
+
+    // Catapult system
+    [Header("Catapult System")]
+    [Tooltip("Where the player is supposed to shoot from")]
+    public GameObject catapultObject;
+    [Tooltip("Maximum strength that the player can hold down")]
+    public float catapultMaxTimeHold = 5;
+    [Tooltip("The force multiplier of the catapulting")]
+    public float catapultForce = 5;
+    [Tooltip("Should be the where the player is facing, which is generally the camera")]
+    public Transform direction;
+    [Tooltip("crosshair?")]
+    public Image sporeLoadImage;
+    public Color loadStartingColor;
+    public Color loadEndingColor;
 
     // Init everything
     public void Awake()
