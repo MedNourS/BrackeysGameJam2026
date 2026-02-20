@@ -104,4 +104,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TentacleSpawning
   point1: {fileID: 0}
   point2: {fileID: 0}
-  tentacleSize: 0.2
+  tentacleSize: 0

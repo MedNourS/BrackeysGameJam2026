@@ -1,24 +1,21 @@
 using UnityEngine;
 
-public class PlayingPlayerState : SuperState
+public class PlayingPlayerState : SuperState 
 {
     // Constructor for passing context
     public PlayingPlayerState(PlayerContext ctx) : base(ctx) { }
 
     // Default child
-    protected override State GetDefaultState() { return new SurfaceMovementPlayerState(context); }
+    protected override State GetDefaultState() { return new WallWalkerPlayerState(context); }
 
-    public override void Enter()
-    {
+    public override void Enter() {
         base.Enter();
     }
-    public override void Exit()
-    {
+    public override void Exit() { 
         base.Exit();
     }
 
-    public override void Update()
-    {
+    public override void Update() { 
         base.Update();
     }
 }
