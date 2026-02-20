@@ -4564,6 +4564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InkManager
   inkPrefab: {fileID: 8140075860794693014, guid: 285fe1ae3730d4d5dae8f912e7df9f2d, type: 3}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   m_EditorClassIdentifier: Assembly-CSharp::PlayerContext
   player: {fileID: 0}
@@ -4587,6 +4588,8 @@ MonoBehaviour:
   loadEndingColor: {r: 0, g: 0, b: 0, a: 0}
 >>>>>>> 222ae2e60e3c8ee353132d2a7d7d1c68cd2fad74
 =======
+=======
+>>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
 --- !u!114 &3289819662489883588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4606,6 +4609,9 @@ MonoBehaviour:
     m_Bits: 8
   inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   cam: {fileID: 330585545}
+<<<<<<< HEAD
+>>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
+=======
 >>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
 --- !u!1 &4261338545273155625
 GameObject:
@@ -5168,6 +5174,7 @@ SceneRoots:
   - {fileID: 1625783542}
   - {fileID: 910443479}
 <<<<<<< HEAD
+<<<<<<< HEAD
   - {fileID: 780169570}
   - {fileID: 986629935}
   - {fileID: 376769395}
@@ -5175,5 +5182,7 @@ SceneRoots:
   - {fileID: 1123607424}
   - {fileID: 4302389962610877827}
 >>>>>>> 222ae2e60e3c8ee353132d2a7d7d1c68cd2fad74
+=======
+>>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
 =======
 >>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
