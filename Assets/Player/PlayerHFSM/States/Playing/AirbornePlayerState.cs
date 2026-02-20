@@ -21,6 +21,6 @@ public class AirbornePlayerState : State
         //parentSM.ChangeState(new WallWalkerPlayerState(context));
 
         Collider[] hits = Physics.OverlapSphere(context.body.position, 0.5f, context.terrainMask);
-        if(hits.Length > 0) parentSM.ChangeState(new WallWalkerPlayerState(context));
+        if (hits.Length > 0) parentSM.ChangeState(new SurfaceMovementPlayerState(context));
     }
 }

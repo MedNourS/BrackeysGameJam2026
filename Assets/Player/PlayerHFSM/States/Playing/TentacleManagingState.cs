@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class TentacleManagingState : State
 {
@@ -18,7 +16,7 @@ public class TentacleManagingState : State
     {
         joints = new List<GameObject> { context.player };
         tentacles = new List<GameObject>();
-        vector3Memory = new List<Vector3>();
+        vector3Memory = new List<Vector3> { context.player.transform.position };
 
         for (int i = 0; i < context.maxTentacleLength; i++)
         {
@@ -39,9 +37,11 @@ public class TentacleManagingState : State
 
     public override void Update()
     {
-        // Need to remove nailing
         float distance = Vector3.Distance(joints[joints.Count - 2].transform.position, joints[joints.Count - 1].transform.position);
-        Debug.Log(distance);
+        // Debug.Log(distance);
+
+        Debug.Log($"Joints count: {joints.Count}");
+        Debug.Log($"Memory count: {vector3Memory.Count}");
 
         if (context.tentacleUpdateTime <= time && 0f < distance)
         {
@@ -73,7 +73,7 @@ public class TentacleManagingState : State
                 TentacleSpawning tentacleInfo = tentacles[i].GetComponent<TentacleSpawning>();
                 tentacleInfo.point1 = joints[i].transform;
                 tentacleInfo.point2 = joints[i + 1].transform;
-                tentacleInfo.tentacleSize = (tentacles.Count - i) / Mathf.Pow(tentacles.Count, 0.8f);
+                tentacleInfo.tentacleSize = 1f;
             }
         }
         else
