@@ -4563,56 +4563,6 @@ MonoBehaviour:
 <<<<<<< HEAD
   m_EditorClassIdentifier: Assembly-CSharp::InkManager
   inkPrefab: {fileID: 8140075860794693014, guid: 285fe1ae3730d4d5dae8f912e7df9f2d, type: 3}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerContext
-  player: {fileID: 0}
-  terrainMask:
-    serializedVersion: 2
-    m_Bits: 8
-  tentacleConnector: {fileID: 0}
-  tentacleJoint: {fileID: 0}
-  maxTentacleLength: 5
-  tentacleUpdateTime: 0.1
-  isCapturing: 0
-  velocity: {x: 0, y: 0, z: 0}
-  movementSpeed: 5
-  sporeSpeed: 8
-  catapultObject: {fileID: 0}
-  catapultMaxTimeHold: 5
-  catapultForce: 5
-  direction: {fileID: 0}
-  sporeLoadImage: {fileID: 0}
-  loadStartingColor: {r: 0, g: 0, b: 0, a: 0}
-  loadEndingColor: {r: 0, g: 0, b: 0, a: 0}
->>>>>>> 222ae2e60e3c8ee353132d2a7d7d1c68cd2fad74
-=======
-=======
->>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
---- !u!114 &3289819662489883588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3289819662489883585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d333ac6c78e4789478f399c8bbc5f97c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SphereMovement
-  speed: 0
-  sphere: {fileID: 2680844358921467005}
-  terrainMask:
-    serializedVersion: 2
-    m_Bits: 8
-  inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  cam: {fileID: 330585545}
-<<<<<<< HEAD
->>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
-=======
->>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
 --- !u!1 &4261338545273155625
 GameObject:
   m_ObjectHideFlags: 0
@@ -5173,16 +5123,6 @@ SceneRoots:
 <<<<<<< HEAD
   - {fileID: 1625783542}
   - {fileID: 910443479}
-<<<<<<< HEAD
-<<<<<<< HEAD
   - {fileID: 780169570}
   - {fileID: 986629935}
   - {fileID: 376769395}
-=======
-  - {fileID: 1123607424}
-  - {fileID: 4302389962610877827}
->>>>>>> 222ae2e60e3c8ee353132d2a7d7d1c68cd2fad74
-=======
->>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
-=======
->>>>>>> parent of 5ded0e3 (Merge branch 'main' of https://github.com/MedNourS/BrackeysGameJam2026)
