@@ -29,7 +29,7 @@ public class InkManager : MonoBehaviour
 
         if (Keyboard.current.downArrowKey.wasPressedThisFrame)
         {
-            checkIfStandingOnInk(transform.position);
+            checkIfStandingOnInk(transform.position, Vector3.down);
         }
     }
 
@@ -60,10 +60,10 @@ public class InkManager : MonoBehaviour
     /// </summary>
     /// <param name="pos">The position of the player</param>
     /// <returns>Returns true if player is standing on ink</returns>
-    public bool checkIfStandingOnInk(Vector3 pos)
+    public bool checkIfStandingOnInk(Vector3 pos, Vector3 directionToCheck)
     {
         //Sends a ray down (-y)
-        Ray ray = new Ray(pos, Vector3.down);
+        Ray ray = new Ray(pos, directionToCheck);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit))
         {

@@ -35,7 +35,7 @@ public class Healthbar : MonoBehaviour
     {
         
         
-        if (!InkManager.Instance.checkIfStandingOnInk(body.transform.position))
+        if (!InkManager.Instance.checkIfStandingOnInk(body.transform.position, Vector3.down))
         {
             slider.value -= 0.15f;
         }
