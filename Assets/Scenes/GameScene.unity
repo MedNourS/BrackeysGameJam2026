@@ -3155,7 +3155,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Healthbar
   slider: {fileID: 302167385}
   body: {fileID: 3289819662489883585}
-  inkManager: {fileID: 21969663}
 --- !u!1 &1471723691 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1375723535029480785, guid: 98c53ba8851729149bd6b12640a7da03, type: 3}
@@ -3335,7 +3334,7 @@ Transform:
   m_GameObject: {fileID: 1564222579}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.842, y: -4.11, z: -1.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3366,7 +3365,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3bf2e6b1f90ce084495bfdb86719b252, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5158,8 +5157,31 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 214298344b8737049bd619acc72058a1, type: 3}
   m_Name: 
+<<<<<<< HEAD
   m_EditorClassIdentifier: Assembly-CSharp::InkManager
   inkPrefab: {fileID: 8140075860794693014, guid: 285fe1ae3730d4d5dae8f912e7df9f2d, type: 3}
+=======
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerContext
+  player: {fileID: 0}
+  terrainMask:
+    serializedVersion: 2
+    m_Bits: 8
+  tentacleConnector: {fileID: 0}
+  tentacleJoint: {fileID: 0}
+  maxTentacleLength: 5
+  tentacleUpdateTime: 0.1
+  isCapturing: 0
+  velocity: {x: 0, y: 0, z: 0}
+  movementSpeed: 5
+  sporeSpeed: 8
+  catapultObject: {fileID: 0}
+  catapultMaxTimeHold: 5
+  catapultForce: 5
+  direction: {fileID: 0}
+  sporeLoadImage: {fileID: 0}
+  loadStartingColor: {r: 0, g: 0, b: 0, a: 0}
+  loadEndingColor: {r: 0, g: 0, b: 0, a: 0}
+>>>>>>> 222ae2e60e3c8ee353132d2a7d7d1c68cd2fad74
 --- !u!1 &4261338545273155625
 GameObject:
   m_ObjectHideFlags: 0
@@ -5176,6 +5198,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &4302389962610877827
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.13931
+      objectReference: {fileID: 0}
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 180764280263873865, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1775682238711790819, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
+      propertyPath: m_Name
+      value: Eyeball
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2caede6d7e00ab9129e848ddb717e3c4, type: 3}
 --- !u!4 &4476923961262998563
 Transform:
   m_ObjectHideFlags: 0
@@ -5660,8 +5739,13 @@ SceneRoots:
   - {fileID: 1030103656}
   - {fileID: 1787660275}
   - {fileID: 979071828}
+<<<<<<< HEAD
   - {fileID: 1625783542}
   - {fileID: 910443479}
   - {fileID: 780169570}
   - {fileID: 986629935}
   - {fileID: 376769395}
+=======
+  - {fileID: 1123607424}
+  - {fileID: 4302389962610877827}
+>>>>>>> 222ae2e60e3c8ee353132d2a7d7d1c68cd2fad74
