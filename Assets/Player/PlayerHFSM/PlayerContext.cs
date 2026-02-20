@@ -12,22 +12,27 @@ public class PlayerContext : MonoBehaviour
     public InputActionMap playerControls { get; private set; }
     public InputActionMap UIControls { get; private set; }
 
-    // Assign in-editor
     public Camera cam { get; private set; }
 
-    public Transform headTarget;
-    public Transform groundCheck;
-    public Transform ceilCheck;
-
+    // Assign in-editor
+    public GameObject player;
     public LayerMask terrainMask;
-    
+    public GameObject tentacleConnector;
+    public GameObject tentacleJoint;
+
+    public int maxTentacleLength = 5;
+    public float tentacleUpdateTime = 0.1f;
+
     public bool isGrounded { get; private set; }
+
+    public bool isCapturing = false;
 
     // Modifyable in other states
     public Vector3 velocity;
-    public float gravity = -0.3f;
-    public float kSpeed = 8f;
-    public float jumpHeight = 0.015f;
+    // public float gravity = -0.3f;
+    public float movementSpeed = 5f;
+    public float sporeSpeed = 8f;
+    // public float jumpHeight = 0.015f;
 
     // For private input setting only
     private InputSystem_Actions controls;
@@ -39,6 +44,8 @@ public class PlayerContext : MonoBehaviour
         pc = GetComponent<PlayerController>();
         cc = GetComponent<CharacterController>();
         body = transform;
+
+        cam = GetComponentInChildren<Camera>();
 
         controls = new InputSystem_Actions();
 

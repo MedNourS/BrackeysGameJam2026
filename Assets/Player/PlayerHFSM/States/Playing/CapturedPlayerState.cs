@@ -19,5 +19,11 @@ public class CapturedPlayerState : State
     {
         // Logic for looking around, if fire spore,
         //parentSM.ChangeState(new AirbornePlayerState(context));
+
+        if (!context.isCapturing)
+        {
+            parentSM.ChangeState(new SurfaceMovementPlayerState(context));
+            return;
+        }
     }
 }
