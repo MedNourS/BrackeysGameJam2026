@@ -48,21 +48,22 @@ public class InkManager : MonoBehaviour
         decalObject.GetComponent<DecalProjector>().size = new Vector3(width, height, 1);
  
         //Makes the object face the same direction as the normal
-        decalObject.transform.forward = normal;
+        decalObject.transform.forward = -normal;
 
-        //Add an offset in the normal direction so the collider doesn't stick out, * 9/10 so it still sticks out a bit
+        //Add an offset in the normal direction so the collider doesn't stick out, divide by 10 so it sticks out a bit
         //It also fixes the flickering
-        decalObject.transform.position -= normal * 9 / 10;
+        decalObject.transform.position += normal  / 10;
     }
 
     /// <summary>
     /// Checks if the player is standing on ink
     /// </summary>
     /// <param name="pos">The position of the player</param>
+    /// <param name="directionToCheck">The direction to check(Vector3.down, up, forward, etc)</param>
     /// <returns>Returns true if player is standing on ink</returns>
     public bool checkIfStandingOnInk(Vector3 pos, Vector3 directionToCheck)
     {
-        //Sends a ray down (-y)
+        //Sends a ray in the given direction
         Ray ray = new Ray(pos, directionToCheck);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit))
