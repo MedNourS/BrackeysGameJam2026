@@ -12,7 +12,6 @@ public class Healthbar : MonoBehaviour
 
     [SerializeField] private Slider slider;
     [SerializeField] private GameObject body;
-    [SerializeField] private InkManager inkManager;
 
 
     private void Awake()
@@ -36,7 +35,7 @@ public class Healthbar : MonoBehaviour
     {
         
         
-        if (!inkManager.checkIfStandingOnInk(body.transform.position))
+        if (!InkManager.Instance.checkIfStandingOnInk(body.transform.position, Vector3.down))
         {
             slider.value -= 0.15f;
         }
