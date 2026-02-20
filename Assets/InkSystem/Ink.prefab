@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2607394935331534061}
   - component: {fileID: 5185111201562103975}
   - component: {fileID: 6177277756285997040}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Ink
   m_TagString: Ink
   m_Icon: {fileID: 0}
