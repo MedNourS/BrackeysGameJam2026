@@ -24,6 +24,7 @@ public class SurfaceMovementPlayerState : State
         Cursor.lockState = CursorLockMode.Locked;
         controls.Player.Move.Enable();
 
+        /* Part of Declan's SphereMovement.cs */
         forward = context.body.forward;
         for (int i = 1; i < 5; i++)
         {
@@ -45,31 +46,35 @@ public class SurfaceMovementPlayerState : State
 
     public override void Update()
     {
+        /* Easy little code that changes state if the player is capturing */
         if (context.isCapturing)
         {
             parentSM.ChangeState(new CapturedPlayerState(context));
             return;
         }
 
+        /* A deviation of Declan's SphereMovement.cs, where the input is rotated depending on the yaw (left and right angle) of the camera */
         Vector2 input = controls.Player.Move.ReadValue<Vector2>();
         float cameraYaw = context.cam.transform.eulerAngles.y;
         float degreesToRadians = -(float)Math.PI / 180f;
-
         input = new Vector2(
             input.x * (float)Math.Cos(cameraYaw * degreesToRadians) - input.y * (float)Math.Sin(cameraYaw * degreesToRadians),
             input.x * (float)Math.Sin(cameraYaw * degreesToRadians) + input.y * (float)Math.Cos(cameraYaw * degreesToRadians)
         );
 
+        /* Part of Declan's SphereMovement.cs */
         Vector2 normalizedInput = input.normalized;
         inputAngle = (input != Vector2.zero)
             ? Mathf.Atan2(normalizedInput.x, normalizedInput.y) * Mathf.Rad2Deg
             : 0f;
 
+        /* Part of Declan's SphereMovement.cs */
         dir = Quaternion.AngleAxis(inputAngle, up) * forward;
         Vector3 move = dir * context.movementSpeed * input.magnitude * Time.deltaTime;
         Vector3 ahead = context.body.position + move + up * 0.001f;
         context.body.position = ahead;
 
+        /* Part of Declan's SphereMovement.cs */
         SnapToNearestSurface(2f);
         float dist = 0f;
         while (dist < 0.25f)
@@ -87,7 +92,8 @@ public class SurfaceMovementPlayerState : State
         }
         FindClosestPoint(context.body.position, 10000f, out _, out Vector3? closestDebug, out _, out _);
 
-        /* Run another state in parallel */
+
+        /* Run the tentacle manager state in parallel */
         tentacleManagerState.Update();
     }
 
