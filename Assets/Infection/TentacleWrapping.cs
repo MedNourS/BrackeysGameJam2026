@@ -1,8 +1,9 @@
 using System;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
-
+// https://www.desmos.com/3d/rk1z9phpw1 link to original desmos graph
 public class TentacleWrapping : MonoBehaviour
 {
     private static Vector3[] CreatePoints(int amountOfPoints)
@@ -63,7 +64,7 @@ public class TentacleWrapping : MonoBehaviour
     // This is the important step on desmos
     // Desmos explanation: If A is (0,1,0) then the cross product will return 0, so get the dot product and if A aligns too closely with (0,1,0) then use (1,0,0) (important step!!)
     // TODO rename method maybe
-    private static Vector3 ImportantStep(Vector3 axis)
+    private static Vector3 GetNonAligningAxis(Vector3 axis)
     {
         Vector3 yVector = new(0, 1, 0);
         if (Vector3.Dot(axis, yVector) > 0.98)
@@ -114,18 +115,24 @@ public class TentacleWrapping : MonoBehaviour
         
     }
     
-    private static Vector3[] FlattenPoints(Vector3[] pointsOnPlane, Vector3[] perpendicularVectors)
+    private static Vector2[] FlattenPoints(Vector3[] pointsOnPlane, Vector3[] perpendicularVectors)
     {
         Vector2[] flattenedPoints = new Vector2[pointsOnPlane.Length];
         for (int i = 0; i < pointsOnPlane.Length; i++)
         {
-            flattenedPoints[i] = new();
-            flattenedPoints[i][0] = Vector3.Dot(pointsOnPlane[i], perpendicularVectors[0]);
-            flattenedPoints[i][1] = Vector3.Dot(pointsOnPlane[i], perpendicularVectors[1]);
+            flattenedPoints[i] = new Vector2(Vector3.Dot(pointsOnPlane[i], perpendicularVectors[0]), Vector3.Dot(pointsOnPlane[i], perpendicularVectors[1]));
         }
-        return pointsOnPlane;
+        return flattenedPoints;
     }
 
+    private static bool IsWrapped(Vector3[] flatPoints)
+    {
+        for (int i = 0; i < flatPoints.Length - 1; i++)
+        {
+            
+        }
+        return false;
+    }
     #endregion
 
     #region callers
@@ -138,37 +145,43 @@ public class TentacleWrapping : MonoBehaviour
         axis = Vector3.Normalize(axis);
         return axis;
     }
-    private static Vector3[] projecting(Vector3 axis, Vector3[] points)
+    private static Vector2[] projecting(Vector3 axis, Vector3[] points, Vector3 centroid)
     {
-        Vector3 importantVector = ImportantStep(axis);
-        Vector3[] perpendicularVector = GetPerpendicularVector(axis, importantVector);
-        Vector3 centroid = GetCentroid(points);
+        Vector3 aligningAxis = GetNonAligningAxis(axis);
+        Vector3[] perpendicularVector = GetPerpendicularVector(axis, aligningAxis);
         Vector3[] centeredPoints = CenterPoints(points, centroid);
         Vector3[] pointsOnPlane = PutPointsOnPlane(centeredPoints, axis);
-        Vector3[] flattenedPoints = FlattenPoints(pointsOnPlane, perpendicularVector);
-        Vector3[] centroidAndFlattenedPoints = new Vector3[flattenedPoints.Length];
-
-        for (int i = 0; i < centroidAndFlattenedPoints.Length - 1; i++)
-        {
-            centroidAndFlattenedPoints[i] = flattenedPoints[i];
-        }
-        centroidAndFlattenedPoints[centroidAndFlattenedPoints.Length] = centroid;
-
-        return centroidAndFlattenedPoints;
+        Vector2[] flattenedPoints = FlattenPoints(pointsOnPlane, perpendicularVector);
+        return flattenedPoints;
     }
     #endregion
 
-    public static GameObject GetWrappedAround(Vector3[] points)
+    public static GameObject GetWrappedAround(Vector3[] points, LayerMask layerMask)
     {
-        Vector3 axis = GetAxis(points);
-        Vector3[] toUnpack = projecting(axis, points);
-        Vector3 centroid = toUnpack[toUnpack.Length];
-        Vector3[] flattenedNormalizedPoints = new Vector3[points.Length];
-        for (int i = 0; i < points.Length; i++)
+        Vector3 centroid = GetCentroid(points);
+        bool hit = Physics.SphereCast(centroid, 1, Vector3.up, out RaycastHit hitInfo, 0.0001f, layerMask);
+        if (hit)
         {
-            flattenedNormalizedPoints[i] = Vector3.Normalize(toUnpack[i]);
+            Vector3 axis = GetAxis(points);
+            Vector2[] flattenedPoints = projecting(axis, points, centroid);
+            Vector2[] flattenedNormalizedPoints = new Vector2[points.Length];
+            for (int i = 0; i < points.Length; i++)
+            {
+                flattenedNormalizedPoints[i] = flattenedPoints[i].normalized;
+            }
+            bool wrapped = false;
+            if (wrapped)
+            {
+                return hitInfo.transform.gameObject;
+            }
+            else
+            {
+                return null;
+            }
         }
-        return null;
-        return new GameObject();
+        else
+        {
+            return null;
+        }
     }
 }
