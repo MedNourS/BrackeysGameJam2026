@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
     public static Timer Instance { get; private set; }
 
     [SerializeField] private TMP_Text text;
+    [SerializeField] private GameObject victoryMenu;
 
     void Start()
     {
@@ -76,6 +77,6 @@ public class Timer : MonoBehaviour
         }
     }
 
-    public void OpenVictoryScreen() => SceneManager.LoadScene("VictoryMenuScene");
+    public void OpenVictoryScreen() => victoryMenu.SetActive(true);
 
 }
