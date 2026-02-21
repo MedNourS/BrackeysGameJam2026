@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ink
+  - Projectile
+  - Catapult
+  - IgnoreMesh
+  - NormalObject
+  - InfectedObject
   layers:
   - Default
   - TransparentFX

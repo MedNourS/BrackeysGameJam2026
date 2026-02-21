@@ -11,6 +11,7 @@ public class CapturedPlayerState : State
     private bool isHolding = false;
     private Rigidbody rb;
     private Transform catapultObject;
+    private GameObject regularObject;
 
     private RaycastHit hit;
 
@@ -21,16 +22,18 @@ public class CapturedPlayerState : State
         context.sporeLoadImage.fillAmount = 0;
         foreach(Transform t in context.capturedObject.transform)
         {
-            if(t.tag == "catapult")
+            Debug.Log(t.name);
+            if(t.tag == "Catapult" || t.name == "Entrance")
             {
+                Debug.Log("Found Catapult");
                 catapultObject = t;
             }
         }
-        context.body.position = catapultObject.position;
+        context.body.position = catapultObject.position + new Vector3(0, context.body.GetComponent<MeshFilter>().mesh.bounds.extents.y, 0);
 
         paintInkAround();
 
-
+        context.capturedObject.GetComponent<ModelSwitching>().SwapModels();
     }
 
     public override void Exit()
@@ -92,32 +95,32 @@ public class CapturedPlayerState : State
         Ray leftRay = new Ray(context.body.transform.position, Vector3.left);
         Ray rightRay= new Ray(context.body.transform.position, Vector3.right);
 
-        if(Physics.Raycast(forwardRay, out hit, extents.z + context.captureArea))
+        if(Physics.Raycast(forwardRay, out hit, extents.z + context.captureArea, context.terrainMask))
         {
             InkManager.Instance.createInkBlob(hit.point, hit.normal, size.x, size.y);
         }
 
-        if(Physics.Raycast(backRay, out hit, extents.z + context.captureArea))
+        if(Physics.Raycast(backRay, out hit, extents.z + context.captureArea, context.terrainMask))
         {
             InkManager.Instance.createInkBlob(hit.point, hit.normal, size.x, size.y);
         }
 
-        if(Physics.Raycast(upRay, out hit, extents.y + context.captureArea))
+        if(Physics.Raycast(upRay, out hit, extents.y + context.captureArea, context.terrainMask))
         {
             InkManager.Instance.createInkBlob(hit.point, hit.normal, size.z, size.x);
         }
 
-        if(Physics.Raycast(downRay, out hit, extents.y + context.captureArea))
+        if(Physics.Raycast(downRay, out hit, extents.y + context.captureArea, context.terrainMask))
         {
             InkManager.Instance.createInkBlob(hit.point, hit.normal, size.z, size.x);
         }
 
-        if(Physics.Raycast(leftRay, out hit, extents.x + context.captureArea))
+        if(Physics.Raycast(leftRay, out hit, extents.x + context.captureArea, context.terrainMask))
         {
             InkManager.Instance.createInkBlob(hit.point, hit.normal, size.z, size.y);
         }
 
-        if(Physics.Raycast(rightRay, out hit, extents.x + context.captureArea))
+        if(Physics.Raycast(rightRay, out hit, extents.x + context.captureArea, context.terrainMask))
         {
             InkManager.Instance.createInkBlob(hit.point, hit.normal, size.z, size.y);
         }
