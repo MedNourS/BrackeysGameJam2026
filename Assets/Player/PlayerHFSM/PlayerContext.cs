@@ -39,10 +39,12 @@ public class PlayerContext : MonoBehaviour
     private InputSystem_Actions controls;
 
 
-    // Catapult system
+    // Capture system
     [Header("Catapult System")]
-    [Tooltip("Where the player is supposed to shoot from")]
-    public GameObject catapultObject;
+    [Tooltip("The captured object, should be empty and only defined on object capture")]
+    public GameObject capturedObject;
+    [Tooltip("How far the walls can get infected/inked")]
+    public float captureArea = 2.5f;
     [Tooltip("Maximum strength that the player can hold down")]
     public float catapultMaxTimeHold = 5;
     [Tooltip("The force multiplier of the catapulting")]

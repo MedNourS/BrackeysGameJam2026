@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -7,6 +8,8 @@ public class InkManager : MonoBehaviour
 {
     [SerializeField] private GameObject inkPrefab;
     public static InkManager Instance;
+    private RaycastHit hit;
+    [SerializeField] private LayerMask layerMask;
 
     private void Awake()
     {
@@ -20,7 +23,6 @@ public class InkManager : MonoBehaviour
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             Ray ray = Camera.main.ScreenPointToRay(new Vector3(Mouse.current.position.x.value, Mouse.current.position.y.value, 0));
-            RaycastHit hit;
             if(Physics.Raycast(ray, out hit))
             {
                 createInkBlob(hit.point, hit.normal, 1, 1);
@@ -30,6 +32,46 @@ public class InkManager : MonoBehaviour
         if (Keyboard.current.downArrowKey.wasPressedThisFrame)
         {
             checkIfStandingOnInk(transform.position, Vector3.down);
+
+            Vector3 size = GetComponent<MeshFilter>().mesh.bounds.size;
+
+            Ray forwardRay = new Ray(transform.position, Vector3.forward);
+            Ray backRay = new Ray(transform.position, Vector3.back);
+            Ray upRay = new Ray(transform.position, Vector3.up);
+            Ray downRay = new Ray(transform.position, Vector3.down);
+            Ray leftRay = new Ray(transform.position, Vector3.left);
+            Ray rightRay= new Ray(transform.position, Vector3.right);
+
+            if(Physics.Raycast(forwardRay, out hit, size.z))
+            {
+                createInkBlob(hit.point, hit.normal, size.x, size.y);
+            }
+
+            if(Physics.Raycast(backRay, out hit, size.z))
+            {
+                createInkBlob(hit.point, hit.normal, size.x, size.y);
+            }
+
+            if(Physics.Raycast(upRay, out hit, size.y))
+            {
+                createInkBlob(hit.point, hit.normal, size.z, size.x);
+            }
+
+            if(Physics.Raycast(downRay, out hit, size.y))
+            {
+                createInkBlob(hit.point, hit.normal, size.z, size.x);
+            }
+
+            if(Physics.Raycast(leftRay, out hit, size.x))
+            {
+                createInkBlob(hit.point, hit.normal, size.z, size.y);
+            }
+
+            if(Physics.Raycast(rightRay, out hit, size.x))
+            {
+                createInkBlob(hit.point, hit.normal, size.z, size.y);
+            }
+
         }
     }
 
@@ -40,7 +82,7 @@ public class InkManager : MonoBehaviour
     /// <param name="normal">The direction is it supposed to face</param>
     /// <param name="height">Height of the object</param>
     /// <param name="width">Width of the object</param>
-    public void createInkBlob(Vector3 pos, Vector3 normal, float height, float width)
+    public void createInkBlob(Vector3 pos, Vector3 normal, float width, float height)
     {
         GameObject decalObject = Instantiate(inkPrefab, pos, Quaternion.identity);
 
@@ -53,6 +95,9 @@ public class InkManager : MonoBehaviour
         //Add an offset in the normal direction so the collider doesn't stick out, divide by 10 so it sticks out a bit
         //It also fixes the flickering
         decalObject.transform.position += normal  / 10;
+
+        //Set the size of the box collider to be the same as the decal
+        decalObject.GetComponent<BoxCollider>().size = new Vector3(width, height, 1);
     }
 
     /// <summary>

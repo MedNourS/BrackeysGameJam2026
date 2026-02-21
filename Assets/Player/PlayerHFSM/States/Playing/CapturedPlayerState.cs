@@ -1,4 +1,5 @@
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,13 +10,27 @@ public class CapturedPlayerState : State
     private float holdTimer;
     private bool isHolding = false;
     private Rigidbody rb;
+    private Transform catapultObject;
+
+    private RaycastHit hit;
 
     public override void Enter()
     {
         Debug.Log("Object captured! Ready to spore!");
         holdTimer = 0;
         context.sporeLoadImage.fillAmount = 0;
-        context.body.position = context.catapultObject.transform.position;
+        foreach(Transform t in context.capturedObject.transform)
+        {
+            if(t.tag == "catapult")
+            {
+                catapultObject = t;
+            }
+        }
+        context.body.position = catapultObject.position;
+
+        paintInkAround();
+
+
     }
 
     public override void Exit()
@@ -62,6 +77,49 @@ public class CapturedPlayerState : State
         if(holdTimer >= context.catapultMaxTimeHold)
         {
             holdTimer = context.catapultMaxTimeHold;
+        }
+    }
+
+    private void paintInkAround()
+    {
+        Vector3 size = context.body.transform.GetComponent<MeshFilter>().mesh.bounds.size;
+        Vector3 extents = context.body.transform.GetComponent<MeshFilter>().mesh.bounds.extents;
+
+        Ray forwardRay = new Ray(context.body.transform.position, Vector3.forward);
+        Ray backRay = new Ray(context.body.transform.position, Vector3.back);
+        Ray upRay = new Ray(context.body.transform.position, Vector3.up);
+        Ray downRay = new Ray(context.body.transform.position, Vector3.down);
+        Ray leftRay = new Ray(context.body.transform.position, Vector3.left);
+        Ray rightRay= new Ray(context.body.transform.position, Vector3.right);
+
+        if(Physics.Raycast(forwardRay, out hit, extents.z + context.captureArea))
+        {
+            InkManager.Instance.createInkBlob(hit.point, hit.normal, size.x, size.y);
+        }
+
+        if(Physics.Raycast(backRay, out hit, extents.z + context.captureArea))
+        {
+            InkManager.Instance.createInkBlob(hit.point, hit.normal, size.x, size.y);
+        }
+
+        if(Physics.Raycast(upRay, out hit, extents.y + context.captureArea))
+        {
+            InkManager.Instance.createInkBlob(hit.point, hit.normal, size.z, size.x);
+        }
+
+        if(Physics.Raycast(downRay, out hit, extents.y + context.captureArea))
+        {
+            InkManager.Instance.createInkBlob(hit.point, hit.normal, size.z, size.x);
+        }
+
+        if(Physics.Raycast(leftRay, out hit, extents.x + context.captureArea))
+        {
+            InkManager.Instance.createInkBlob(hit.point, hit.normal, size.z, size.y);
+        }
+
+        if(Physics.Raycast(rightRay, out hit, extents.x + context.captureArea))
+        {
+            InkManager.Instance.createInkBlob(hit.point, hit.normal, size.z, size.y);
         }
     }
 }
