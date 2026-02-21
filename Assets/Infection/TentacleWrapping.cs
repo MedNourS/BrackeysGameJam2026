@@ -157,4 +157,18 @@ public class TentacleWrapping : MonoBehaviour
         return centroidAndFlattenedPoints;
     }
     #endregion
+
+    public static GameObject GetWrappedAround(Vector3[] points)
+    {
+        Vector3 axis = GetAxis(points);
+        Vector3[] toUnpack = projecting(axis, points);
+        Vector3 centroid = toUnpack[toUnpack.Length];
+        Vector3[] flattenedNormalizedPoints = new Vector3[points.Length];
+        for (int i = 0; i < points.Length; i++)
+        {
+            flattenedNormalizedPoints[i] = Vector3.Normalize(toUnpack[i]);
+        }
+        return null;
+        return new GameObject();
+    }
 }
