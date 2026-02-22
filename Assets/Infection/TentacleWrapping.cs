@@ -1,7 +1,5 @@
 using System;
 using Unity.Mathematics;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 // https://www.desmos.com/3d/rk1z9phpw1 link to original desmos graph
 
@@ -9,6 +7,22 @@ using UnityEngine;
 // ALSO disregard any step where no variable is getting a value assigned
 public class TentacleWrapping : MonoBehaviour
 {
+    //TESTING
+    private void Start()
+    {
+        Vector3[] points = new Vector3[]{new Vector3(1.3472230626315815f,0.4591926083657262f,0.4925636427001581f),new Vector3(1.0957787997651038f,1.2176660013209908f,0.2948239162945314f),
+        new Vector3(0.7854834691806565f,0.9109448051403696f,0.4908543694941413f),new Vector3(0.5278540926451856f,1.1568389416500733f,-0.09601998157333709f),
+        new Vector3(0.30508060929985037f,1.4262666968899702f,0.13818660104893232f),new Vector3(-0.23650176622843577f,0.9430116805425541f,0.21179887522535118f),
+        new Vector3(-0.5850787462763305f,0.547411726895372f,-0.026818371777144023f),new Vector3(-0.717357098285387f,0.321174138479034f,-0.0009894328608353598f),
+        new Vector3(-0.4472697808360512f,0.1667944225556091f,0.19465895003657524f),new Vector3(-0.594591717322489f,-0.36478159080560074f,-0.08198008407877827f),
+        new Vector3(0.1102774514617505f,-0.2265306927821792f,-0.46996965764861864f),new Vector3(-0.11722399862455372f,-0.8656512455935297f,-0.5915046603366502f),
+        new Vector3(0.810203915416806f,-0.3452805878427505f,-0.5225836434827082f),new Vector3(0.9497242414315621f,-0.29657728797767724f,-0.12416207687132097f),
+        new Vector3(1.0550136923075446f,-0.1020296714343058f,-0.3202910273480391f),new Vector3(0.9919180548161579f,0.3005351440507687f,-0.1357246193354832f),
+        new Vector3(1.1763953361620887f,0.21308299890734955f,-0.7617084938460245f),new Vector3(1.0148509375440622f,0.6594061366811199f,-0.2481116497015582f),
+        new Vector3(1.2924058649218968f,0.8198772483492687f,-0.8831179669271242f),new Vector3(0.9105660459556351f,1.4403093474629134f,-0.7434991750920095f)};
+        Debug.Log("Wrapped: " + GetWrappedAround(points).name);
+    }
+
     // FOR TESTING ONLY
     private static Vector3[] CreatePoints(int amountOfPoints)
     {
@@ -140,15 +154,10 @@ public class TentacleWrapping : MonoBehaviour
         {
             totalAngle += math.atan2(flatPoints[i].x *flatPoints[i + 1].y - flatPoints[i].y *flatPoints[i + 1].x, flatPoints[i].x *flatPoints[i + 1].x + flatPoints[i].y *flatPoints[i + 1].y);
         }
-        if (totalAngle > tolerance)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-        
+        //Step ∞ to end with an absolute banger
+        totalAngle = Mathf.Abs(totalAngle);
+
+        return totalAngle > tolerance;
     }
     #endregion
 
@@ -179,16 +188,16 @@ public class TentacleWrapping : MonoBehaviour
     }
     #endregion
 
-    public static GameObject GetWrappedAround(Vector3[] points, LayerMask layerMask)
+    public static GameObject GetWrappedAround(Vector3[] points)
     {
         // Step 29 text, step 30 math
         Vector3 centroid = GetCentroid(points);
         // make this lower if spherecast interacts with other objects
-        float sphereCastTolerance = 1f;
-        bool hit = Physics.SphereCast(centroid, sphereCastTolerance, Vector3.up, out RaycastHit hitInfo, 0.0001f, layerMask);
+        float overlapSphereTolerance = 0.2f;
 
+        Collider[] colliders = Physics.OverlapSphere(centroid, overlapSphereTolerance);
         // if the centroid has a gameobject at it, we actually do the math
-        if (hit)
+        if (colliders.Length > 0)
         {
             // step 9 folder
             Vector3 axis = GetAxis(points);
@@ -204,7 +213,7 @@ public class TentacleWrapping : MonoBehaviour
             // Entire wrapping detection (step 41 to end, skipping the visual ones (being anywhere where a variable is not assigned))
             if (IsWrapped(flattenedNormalizedPoints))
             {
-                return hitInfo.transform.gameObject;
+                return colliders[0].transform.gameObject;
             }
             // The object is not wrapped at this else
             else
