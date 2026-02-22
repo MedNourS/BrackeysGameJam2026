@@ -69,9 +69,6 @@ public class PlayerContext : MonoBehaviour
         cc = GetComponent<CharacterController>();
         body = transform;
 
-        cam = GetComponentInChildren<CinemachineCamera>();
-        Debug.Log(baseCam);
-
         controls = new InputSystem_Actions();
 
         playerControls = controls.Player;
