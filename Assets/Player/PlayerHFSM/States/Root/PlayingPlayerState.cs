@@ -6,7 +6,7 @@ public class PlayingPlayerState : SuperState
     public PlayingPlayerState(PlayerContext ctx) : base(ctx) { }
 
     // Default child
-    protected override State GetDefaultState() { return new CapturedPlayerState(context); }
+    protected override State GetDefaultState() { return new SurfaceMovementPlayerState(context); }
 
     public override void Enter()
     {
