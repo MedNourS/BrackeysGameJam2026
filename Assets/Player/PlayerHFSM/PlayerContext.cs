@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -13,7 +14,7 @@ public class PlayerContext : MonoBehaviour
     public InputActionMap playerControls { get; private set; }
     public InputActionMap UIControls { get; private set; }
 
-    public Camera cam { get; private set; }
+    public CinemachineCamera cam { get; private set; }
     public Transform topTarget;
 
     // Assign in-editor
@@ -57,6 +58,8 @@ public class PlayerContext : MonoBehaviour
     public Color loadStartingColor;
     public Color loadEndingColor;
 
+    public bool isInTutorial;
+
     // Init everything
     public void Awake()
     {
@@ -65,7 +68,7 @@ public class PlayerContext : MonoBehaviour
         cc = GetComponent<CharacterController>();
         body = transform;
 
-        cam = GetComponentInChildren<Camera>();
+        cam = GetComponentInChildren<CinemachineCamera>();
 
         controls = new InputSystem_Actions();
 

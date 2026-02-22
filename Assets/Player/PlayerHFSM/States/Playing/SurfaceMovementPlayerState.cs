@@ -20,7 +20,6 @@ public class SurfaceMovementPlayerState : State
     public override void Enter()
     {
         controls = new InputSystem_Actions();
-        Cursor.lockState = CursorLockMode.Locked;
         controls.Player.Move.Enable();
 
         /* Part of Declan's SphereMovement.cs */
@@ -45,6 +44,8 @@ public class SurfaceMovementPlayerState : State
 
     public override void Update()
     {
+        if(context.isInTutorial) return;
+
         /* Easy little code that changes state if the player is capturing */
         if (context.isCapturing)
         {
