@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.ProBuilder;
 
 public class SurfaceMovementPlayerState : State
 {
@@ -55,11 +56,11 @@ public class SurfaceMovementPlayerState : State
 
         /* A deviation of Declan's SphereMovement.cs, where the input is rotated depending on the yaw (left and right angle) of the camera */
         Vector2 input = controls.Player.Move.ReadValue<Vector2>();
-        float cameraYaw = context.cam.transform.eulerAngles.y;
-        input = new Vector2(
-            input.x * Mathf.Cos(cameraYaw * Mathf.Deg2Rad) - input.y * Mathf.Sin(cameraYaw * Mathf.Deg2Rad),
-            input.x * Mathf.Sin(cameraYaw * Mathf.Deg2Rad) + input.y * Mathf.Cos(cameraYaw * Mathf.Deg2Rad)
-        );
+        //float cameraYaw = context.cam.transform.eulerAngles.y;
+        //input = new Vector2(
+        //    input.x * Mathf.Cos(cameraYaw * Mathf.Deg2Rad) - input.y * Mathf.Sin(cameraYaw * Mathf.Deg2Rad),
+        //    input.x * Mathf.Sin(cameraYaw * Mathf.Deg2Rad) + input.y * Mathf.Cos(cameraYaw * Mathf.Deg2Rad)
+        //);
 
         /* Part of Declan's SphereMovement.cs */
         Vector2 normalizedInput = input.normalized;
@@ -143,12 +144,38 @@ public class SurfaceMovementPlayerState : State
             context.body.position = newPoint.Value + up * 0.5f;
             context.topTarget.position = newPoint.Value + up * 1.5f;
 
+            /// WHY IS THIS SO AWKWARD
+
             // Input handling (relative to camera)
             // (Project camera vector onto surface)
             Quaternion camAngles = context.cam.transform.rotation;
-            forward = camAngles * Vector3.forward; // 
-            forward -= Vector3.Dot(forward, up) * up; // Project onto plane
-            forward = forward.normalized;
+            //Vector3 forw = Vector3.ProjectOnPlane(camAngles * Vector3.forward, Vector3.up).normalized;
+            //Vector3 x = up - (up - );
+
+            // Hairy ball: get a tangent vector that always points towards the top of the sphere
+            Vector3 tangent = Vector3.forward - (Vector3.Dot(Vector3.forward, up)) * up;
+            if (tangent.sqrMagnitude < 0.0001f)
+                tangent = Vector3.Cross(-up, Vector3.right);
+
+            tangent = tangent.normalized;
+
+            // yknow what fuck it we atan2ing ts
+            float normAngle = 0f;
+            if (Mathf.Abs(Vector3.Dot(Vector3.up, up)) < 0.999f)
+            {
+                normAngle = Mathf.Atan2(up.z, up.x);
+            }
+
+            float difference = Mathf.Abs(Mathf.Abs(camAngles.eulerAngles.y) - Mathf.Abs(normAngle));
+
+            // replace with local yaw
+            forward = Quaternion.AngleAxis(difference, up) * tangent;
+            //float altitude = Mathf.Asin(Vector3.Dot(up, Vector3.up)) * Mathf.Rad2Deg;
+
+            //forward = Vector3.forward; // 
+            //forward -= Vector3.Dot(Vector3.forward, up) * up; // Project onto plane
+            //forward = forward.normalized;
+            //forward = Quaternion.AngleAxis(camAngles.eulerAngles.y, up) * forward;
 
             Debug.Log(up);
             Debug.Log(forward);
