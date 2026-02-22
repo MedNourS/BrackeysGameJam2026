@@ -15,6 +15,7 @@ public class PlayerContext : MonoBehaviour
     public InputActionMap UIControls { get; private set; }
 
     public CinemachineCamera cam { get; private set; }
+    public Camera baseCam;
     public Transform topTarget;
 
     // Assign in-editor
