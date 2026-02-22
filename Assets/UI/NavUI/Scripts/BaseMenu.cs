@@ -9,6 +9,7 @@ public class BaseMenu : MonoBehaviour
     // Methods are public so they can be accessed with UnityEvents attached to buttons
     public void BackToMain()
     {
+        AudioManager.Instance.PlaySFX("fire2");
         rootMenu.SetActive(true);
         foreach (var menu in optionMenus) { menu.SetActive(false); }
     }
@@ -16,6 +17,7 @@ public class BaseMenu : MonoBehaviour
     // Navigate from main menu to different menus
     public void OpenOptionMenu(GameObject menu)
     {
+        AudioManager.Instance.PlaySFX("fire2");
         rootMenu.SetActive(false);
         if (optionMenus.Contains(menu)) { menu.SetActive(true); }
     }
