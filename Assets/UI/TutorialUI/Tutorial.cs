@@ -20,6 +20,7 @@ public class Tutorial : MonoBehaviour
 
     void Awake()
     {
+        controls = new InputSystem_Actions();
         startMousePos = controls.Player.Look.ReadValue<Vector2>();
         startPlayerPos = controls.Player.Move.ReadValue<Vector2>();
     }
