@@ -15,6 +15,7 @@ public class PlayerContext : MonoBehaviour
     public InputActionMap UIControls { get; private set; }
 
     public CinemachineCamera cam { get; private set; }
+    public Camera baseCam;
     public Transform topTarget;
 
     // Assign in-editor
@@ -69,6 +70,7 @@ public class PlayerContext : MonoBehaviour
         body = transform;
 
         cam = GetComponentInChildren<CinemachineCamera>();
+        Debug.Log(baseCam);
 
         controls = new InputSystem_Actions();
 

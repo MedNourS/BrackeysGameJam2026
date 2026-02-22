@@ -148,7 +148,7 @@ public class SurfaceMovementPlayerState : State
 
             // Input handling (relative to camera)
             // (Project camera vector onto surface)
-            Quaternion camAngles = context.cam.transform.rotation;
+            Quaternion camAngles = context.baseCam.transform.rotation;
             //Vector3 forw = Vector3.ProjectOnPlane(camAngles * Vector3.forward, Vector3.up).normalized;
             //Vector3 x = up - (up - );
 
