@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 
 public class SurfaceMovementPlayerState : State
 {
@@ -21,7 +21,6 @@ public class SurfaceMovementPlayerState : State
     public override void Enter()
     {
         controls = new InputSystem_Actions();
-        Cursor.lockState = CursorLockMode.Locked;
         controls.Player.Move.Enable();
 
         /* Part of Declan's SphereMovement.cs */
@@ -46,6 +45,8 @@ public class SurfaceMovementPlayerState : State
 
     public override void Update()
     {
+        if(context.isInTutorial) return;
+
         /* Easy little code that changes state if the player is capturing */
         if (context.isCapturing)
         {
@@ -55,27 +56,31 @@ public class SurfaceMovementPlayerState : State
 
         /* A deviation of Declan's SphereMovement.cs, where the input is rotated depending on the yaw (left and right angle) of the camera */
         Vector2 input = controls.Player.Move.ReadValue<Vector2>();
-        float cameraYaw = context.cam.transform.eulerAngles.y;
-        float degreesToRadians = -(float)Math.PI / 180f;
-        input = new Vector2(
-            input.x * (float)Math.Cos(cameraYaw * degreesToRadians) - input.y * (float)Math.Sin(cameraYaw * degreesToRadians),
-            input.x * (float)Math.Sin(cameraYaw * degreesToRadians) + input.y * (float)Math.Cos(cameraYaw * degreesToRadians)
-        );
+        //float cameraYaw = context.cam.transform.eulerAngles.y;
+        //input = new Vector2(
+        //    input.x * Mathf.Cos(cameraYaw * Mathf.Deg2Rad) - input.y * Mathf.Sin(cameraYaw * Mathf.Deg2Rad),
+        //    input.x * Mathf.Sin(cameraYaw * Mathf.Deg2Rad) + input.y * Mathf.Cos(cameraYaw * Mathf.Deg2Rad)
+        //);
 
         /* Part of Declan's SphereMovement.cs */
         Vector2 normalizedInput = input.normalized;
+        //inputAngle = (input != Vector2.zero)
+        //    ? Mathf.Atan2(normalizedInput.x, normalizedInput.y) * Mathf.Rad2Deg
+        //    : 0f;
+
         inputAngle = (input != Vector2.zero)
             ? Mathf.Atan2(normalizedInput.x, normalizedInput.y) * Mathf.Rad2Deg
             : 0f;
 
-        /* Part of Declan's SphereMovement.cs */
-        dir = Quaternion.AngleAxis(inputAngle, up) * forward;
+        // Inch the player forward a tiny bit
+        dir = Quaternion.AngleAxis(inputAngle, up) * forward; // Rotate the player input
         Vector3 move = dir * context.movementSpeed * input.magnitude * Time.deltaTime;
         Vector3 ahead = context.body.position + move + up * 0.001f;
         context.body.position = ahead;
 
-        /* Part of Declan's SphereMovement.cs */
         SnapToNearestSurface(2f);
+
+        // If not on a surface then snap to one
         float dist = 0f;
         while (dist < 0.25f)
         {
@@ -90,11 +95,14 @@ public class SurfaceMovementPlayerState : State
             context.body.position += shiftDist * dir;
             SnapToNearestSurface(2f);
         }
-        FindClosestPoint(context.body.position, 10000f, out _, out Vector3? closestDebug, out _, out _);
-
 
         /* Run the tentacle manager state in parallel */
         tentacleManagerState.Update();
+
+        Vector3 b = context.body.position;
+        Debug.DrawLine(b, b + up, Color.green);
+        Debug.DrawLine(b, b + forward, Color.red);
+        Debug.DrawLine(b, b + dir, Color.cyan);
     }
 
 
@@ -131,9 +139,46 @@ public class SurfaceMovementPlayerState : State
         FindClosestPoint(context.body.position, range, out _, out Vector3? newPoint, out _, out Vector3? newUp);
         if (newPoint != null)
         {
+            // New up (Surface Normal)
             up = newUp.Value;
             context.body.position = newPoint.Value + up * 0.5f;
-            forward = Vector3.ProjectOnPlane(forward, up).normalized;
+            context.topTarget.position = newPoint.Value + up * 1.5f;
+
+            /// WHY IS THIS SO AWKWARD
+
+            // Input handling (relative to camera)
+            // (Project camera vector onto surface)
+            Quaternion camAngles = Camera.main.transform.rotation;
+            //Vector3 forw = Vector3.ProjectOnPlane(camAngles * Vector3.forward, Vector3.up).normalized;
+            //Vector3 x = up - (up - );
+
+            // Hairy ball: get a tangent vector that always points towards the top of the sphere
+            Vector3 tangent = Vector3.forward - (Vector3.Dot(Vector3.forward, up)) * up;
+            if (tangent.sqrMagnitude < 0.0001f)
+                tangent = Vector3.Cross(-up, Vector3.right);
+
+            tangent = tangent.normalized;
+
+            // yknow what fuck it we atan2ing ts
+            float normAngle = 0f;
+            if (Mathf.Abs(Vector3.Dot(Vector3.up, up)) < 0.999f)
+            {
+                normAngle = Mathf.Atan2(up.z, up.x);
+            }
+
+            float difference = Mathf.Abs(Mathf.Abs(camAngles.eulerAngles.y) - Mathf.Abs(normAngle));
+
+            // replace with local yaw
+            forward = Quaternion.AngleAxis(difference, up) * tangent;
+            //float altitude = Mathf.Asin(Vector3.Dot(up, Vector3.up)) * Mathf.Rad2Deg;
+
+            //forward = Vector3.forward; // 
+            //forward -= Vector3.Dot(Vector3.forward, up) * up; // Project onto plane
+            //forward = forward.normalized;
+            //forward = Quaternion.AngleAxis(camAngles.eulerAngles.y, up) * forward;
+
+            Debug.Log(up);
+            Debug.Log(forward);
             dir = Quaternion.AngleAxis(inputAngle, up) * forward;
 
             // sphere.rotation = Quaternion.LookRotation(forward, up);

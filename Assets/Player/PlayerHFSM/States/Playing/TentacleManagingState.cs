@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class TentacleManagingState : State
 {
@@ -91,6 +92,12 @@ public class TentacleManagingState : State
                 tentacleInfo.point2 = joints[i + 1].transform;
                 tentacleInfo.tentacleSize = 1f;
             }
+            GameObject capturedObject = TentacleWrapping.GetWrappedAround(convertObjectToVector3(joints));
+            if(capturedObject != null)
+            {
+                context.capturedObject = capturedObject;
+                parentSM.ChangeState(new CapturedPlayerState(context));
+            }
         }
         /* Case where we update the lerp */
         else
@@ -107,5 +114,15 @@ public class TentacleManagingState : State
                 );
             }
         }
+    }
+
+    private Vector3[] convertObjectToVector3(List<GameObject> objects)
+    {
+        Vector3[] vectors = new Vector3[objects.Count];
+        for(int i = 0; i < objects.Count; i++)
+        {
+            vectors[i] = objects[i].transform.position;
+        }
+        return vectors;
     }
 }
