@@ -18,9 +18,6 @@ public class CapturedPlayerState : State
     public override void Enter()
     {
         Debug.Log("Object captured! Ready to spore!");
-        //Updates the infection progress
-        ProgressManager.Instance.UpdateProgress();
-        
         holdTimer = 0;
         context.sporeLoadImage.fillAmount = 0;
         foreach(Transform t in context.capturedObject.transform)

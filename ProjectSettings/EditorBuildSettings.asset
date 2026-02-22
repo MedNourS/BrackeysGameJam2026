@@ -11,15 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/OfficeScene.unity
-    guid: 08ea1b3190dece64cb992fa9d9487b58
-  - enabled: 1
-    path: Assets/Scenes/TutorialScene.unity
-    guid: 5f1b88cc1c7bce84cbbc89b0128b63f5
-  - enabled: 1
-    path: Assets/Scenes/VictoryMenuScene.unity
-    guid: 51bf9825c4dfc842db648b57e03a74cd
+  - enabled: 0
+    path: Assets/Scenes/Levels/Level1.unity
+    guid: 00f9f1e81b87caa4f96b2571c49cf0e8
+  - enabled: 0
+    path: Assets/Scenes/Levels/Level2.unity
+    guid: 2aa1c2266596bf84285a4ffa6cbb99ab
+  - enabled: 0
+    path: Assets/Scenes/Levels/Level3.unity
+    guid: aac105e7c94783b4ca44ddd9bf3274ef
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
